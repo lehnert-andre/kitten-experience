@@ -80,6 +80,11 @@ module.exports = {
       }
     }
   },
+
+  router: {
+    base: '/kitten-experience/'
+  },
+
   /*
   ** Build configuration
   */
