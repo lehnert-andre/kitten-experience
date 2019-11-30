@@ -1,5 +1,7 @@
 # kitten-experience
 
+[![Frontend Build Status](https://travis-ci.org/lehnert-andre/kitten-experience.svg?branch=master)](https://travis-ci.org/lehnert-andre/kitten-experience)
+
 > Do you like kittens?
 
 ## Quickstart
