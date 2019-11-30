@@ -1,0 +1,37 @@
+language: node_js
+node_js:
+  - "10"
+
+dist: trusty
+
+branches:
+  only:
+    - master
+    - release/*
+    - feature/*
+
+jobs:
+  include:
+    #- stage: Prepare
+    #    script:
+    #      - cd frontend
+    #      - cd kitten-experience
+    #      - npm ci
+    #- stage: Test
+    #    script:
+    #      - echo "Skip tests"
+    - stage: Build & Deploy
+        script:
+          - cd frontend
+          - cd kitten-experience
+          - npm ci
+          - grunt build:standalone
+        deploy:
+          provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+          local_dir: frontend/kitten-experience/dist
+          verbose: true
+          keep-history: true
+          on:
+            branch: master

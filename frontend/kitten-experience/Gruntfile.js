@@ -40,13 +40,13 @@ module.exports = function(grunt) {
   ]);
 
   /*
-   * Step: build:local
+   * Step: build:standalone
    *
    * - clear all
    * - copy specific config
    * - start build
    */
-  grunt.registerTask('build:local', [
+  grunt.registerTask('build:standalone', [
     'clear',
     'copy:env_local',
     'shell:npm_generate'
