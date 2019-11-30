@@ -31,6 +31,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/kitten-image.plugin.client.js', mode: 'client' },
+    { src: '~/plugins/logging.plugin.js' }
   ],
   /*
   ** Nuxt.js dev-modules
