@@ -20,6 +20,8 @@
   import AppBar from '~/components/layout/header/app-bar';
   import NavigationDrawer from '~/components/layout/navigation/navigation-drawer';
 
+  let LOGGER;
+
   export default {
     components: {
       AppBar,
@@ -27,6 +29,20 @@
     },
     data() {
       return {}
+    },
+    computed: {
+      isProduction() {
+        return this.$store.getters['isProduction'];
+      }
+    },
+    mounted() {
+      if (this.isProduction) {
+        // deactivate the logging on PROD
+        this.$LOGGER.disableLogging();
+      }
+
+      LOGGER = this.$LOGGER.getLogger(this);
+      LOGGER.info('Application started.');
     }
   }
 </script>

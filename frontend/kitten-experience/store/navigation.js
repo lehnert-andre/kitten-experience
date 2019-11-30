@@ -21,9 +21,13 @@ export const state = () => ({
 
 export const actions = {
   async SHOW_NAVIGATION_DRAWER ({ commit }) {
+    this.$LOGGER.info('STORE/navigation', 'showNavigationDrawer');
+
     commit('showNavigationDrawer');
   },
   async HIDE_NAVIGATION_DRAWER ({ commit }) {
+    this.$LOGGER.info('STORE/navigation', 'hideNavigationDrawer');
+
     commit('hideNavigationDrawer');
   },
   async TOGGLE_NAVIGATION_DRAWER ({ commit, getters }) {

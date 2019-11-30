@@ -17,3 +17,21 @@
     </v-flex>
   </v-layout>
 </template>
+
+
+<script>
+  let LOGGER;
+
+  export default {
+    mounted() {
+      LOGGER = this.$LOGGER.getLogger(this);
+      LOGGER.info('Loaded')
+
+    },
+    methods: {
+      hallo() {
+        LOGGER.info('HALLO')
+      }
+    }
+  }
+</script>

@@ -17,8 +17,8 @@
 
       <v-btn icon disabled>
 
-        <v-icon v-if="getAppState === 'offline'">mdi-flash-circle</v-icon>
-        <v-icon v-else-if="getAppState === 'updating'">mdi-sync</v-icon>
+        <v-icon v-if="getAppState === 'OFFLINE'">mdi-flash-circle</v-icon>
+        <v-icon v-else-if="getAppState === 'UPDATING'">mdi-sync</v-icon>
 
       </v-btn>
 
