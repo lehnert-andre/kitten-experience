@@ -13,8 +13,6 @@ class KittenMockDataProvider extends KittenProvider{
 
 
   async requestNextKitten(numberOfKitten, imageSize) {
-  throw new Error ('OFFLINE');
-
     await new Promise(resolve => setTimeout(() => resolve(), 50));
 
       this.LOGGER.info(`requestNextKitten: Request with numberOfKitten = ${numberOfKitten} and imageSize ${imageSize}x${imageSize} px`);
