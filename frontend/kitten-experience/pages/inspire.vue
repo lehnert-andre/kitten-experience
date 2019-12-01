@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex class="text-center">
       <img
-        src="/kitten-experience/v.png"
+        src="/v.png"
         alt="Vuetify.js"
         class="mb-5"
       >
