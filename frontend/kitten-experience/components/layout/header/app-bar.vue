@@ -15,12 +15,15 @@
 
       <v-spacer />
 
-      <v-btn icon disabled>
-
-        <v-icon v-if="getAppState === 'OFFLINE'">mdi-flash-circle</v-icon>
-        <v-icon v-else-if="getAppState === 'UPDATING'">mdi-sync</v-icon>
-
+      <v-btn v-if="getAppState === 'UPDATING'" icon disabled class="spin">
+        <v-icon>mdi-sync</v-icon>
       </v-btn>
+      <v-btn v-else-if="getAppState === 'OFFLINE'" icon disabled>
+        <v-icon>mdi-flash-circle</v-icon>
+      </v-btn>
+      <v-btn v-else icon disabled>
+      </v-btn>
+
 
 
     </v-app-bar>
@@ -36,15 +39,23 @@
   }
 </style>
 
+
+<style>
+  @-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
+  @-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
+  @keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
+
+  .spin {
+    -webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+  }
+</style>
+
 <script>
-  import Kitten from '~/components/kitten/kitten';
   export default {
-    components: {
-      Kitten
-    },
     data() {
       return {
-        title: 'Vuetify.js'
       }
     },
     computed: {
@@ -55,7 +66,7 @@
         return this.$store.getters['NAVIGATION/isNavigationDrawerClipped']
       },
       getAppState() {
-        return ''//this.$store.getters['navigation/getAppState']
+        return this.$store.getters['getAppState'];
       }
     },
     methods: {

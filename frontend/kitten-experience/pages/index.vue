@@ -20,6 +20,7 @@
 
           <img :src="getKitten.imageUrl" @click="removeFirst"/>
 
+          {{ getKitten }}
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
@@ -45,21 +46,28 @@
       LOGGER = this.$LOGGER.getLogger(this);
 
       kittenService = new KittenService(this);
+      this.currentKitten = await kittenService.nextKitten();
 
-      LOGGER.info('Loaded')
-
-      await kittenService.nextKitten();
+      LOGGER.info('Loaded');
+    },
+    data() {
+      return {
+        currentKitten: null
+      }
     },
     computed: {
+      ready() {
+        return !!kittenService;
+      },
       getKitten() {
-        const queue = this.$store.getters['KITTEN/getFirstIncomingKitten'];
-
-        return queue ? queue : Kitten.unratedKitten(0, '');
+        return this.currentKitten ? this.currentKitten : Kitten.unratedKitten(0, '');
       }
     },
     methods: {
-      removeFirst() {
-        this.$store.dispatch('KITTEN/REMOVE_FIRST_KITTEN_FROM_INCOMING_QUEUE');
+      async removeFirst() {
+        await kittenService.loveKitten(this.currentKitten);
+        this.currentKitten = await kittenService.nextKitten();
+
       }
     }
   }

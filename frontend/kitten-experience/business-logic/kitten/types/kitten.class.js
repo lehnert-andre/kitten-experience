@@ -54,6 +54,18 @@ export class Kitten {
    */
 
   /**
+   * Converts JSON to a class instance
+   *
+   * @param id json parameter
+   * @param imageUrl json parameter
+   * @param rating json parameter
+   * @return {Kitten} instance
+   */
+  static fromJSON({ id, imageUrl, rating }) {
+    return new Kitten(id, imageUrl, rating);
+  }
+
+  /**
    * Creates a new loved kitten
    *
    * rating === 'LOVE'
@@ -127,6 +139,21 @@ export class Kitten {
    */
   isHated() {
     return this.#_rating === 'HATE';
+  }
+
+  /**
+   * Convert the class instance to a JSON object.
+   *
+   * Missing value will be ignored.
+   *
+   * @return {{imageUrl: *, rating: *, id: *}} JSON representation of a kitten class
+   */
+  toJSON() {
+    return {
+      id: this.#_id || undefined,
+      imageUrl: this.#_imageUrl || undefined,
+      rating: this.#_rating || undefined
+    }
   }
 
   /*
