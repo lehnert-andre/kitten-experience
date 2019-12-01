@@ -32,7 +32,7 @@
   },
    computed: {
     routes() {
-      return this.$store.getters['navigation/getRoutes']
+      return this.$store.getters['NAVIGATION/getRoutes']
     }
    }
  }

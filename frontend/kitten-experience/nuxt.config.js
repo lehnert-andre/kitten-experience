@@ -31,7 +31,6 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/kitten-image.plugin.client.js', mode: 'client' },
     { src: '~/plugins/logging.plugin.js' }
   ],
   /*
@@ -40,7 +39,7 @@ module.exports = {
   buildModules: [
     '@nuxtjs/vuetify',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    ['@nuxtjs/dotenv', { systemvars: true }]
+    ['@nuxtjs/dotenv', { systemvars: false }]
   ],
   /*
   ** Nuxt.js modules

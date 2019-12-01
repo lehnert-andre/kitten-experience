@@ -52,7 +52,7 @@
        * @return true, if a clipped drawer should rests under the application toolbar
        */
       isNavigationDrawerClipped() {
-        return this.$store.getters['navigation/isNavigationDrawerClipped']
+        return this.$store.getters['NAVIGATION/isNavigationDrawerClipped']
       },
       getAppState() {
         return ''//this.$store.getters['navigation/getAppState']
@@ -60,7 +60,7 @@
     },
     methods: {
       showNavigationDrawer() {
-        this.$store.dispatch('navigation/SHOW_NAVIGATION_DRAWER');
+        this.$store.dispatch('NAVIGATION/SHOW_NAVIGATION_DRAWER');
       }
     }
   }

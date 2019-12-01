@@ -17,6 +17,9 @@
         <v-card-text>
           <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower
              developers to create amazing applications.</p>
+
+          <img :src="getKitten.imageUrl" @click="removeFirst"/>
+
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
@@ -32,12 +35,32 @@
 </template>
 
 <script>
-  let LOGGER;
+  import KittenService from "../business-logic/kitten/kitten.service";
+  import {Kitten} from "../business-logic/kitten/types/kitten.class";
 
+  let LOGGER;
+  let kittenService;
   export default {
-    mounted() {
+    async mounted() {
       LOGGER = this.$LOGGER.getLogger(this);
+
+      kittenService = new KittenService(this);
+
       LOGGER.info('Loaded')
+
+      await kittenService.nextKitten();
+    },
+    computed: {
+      getKitten() {
+        const queue = this.$store.getters['KITTEN/getFirstIncomingKitten'];
+
+        return queue ? queue : Kitten.unratedKitten(0, '');
+      }
+    },
+    methods: {
+      removeFirst() {
+        this.$store.dispatch('KITTEN/REMOVE_FIRST_KITTEN_FROM_INCOMING_QUEUE');
+      }
     }
   }
 </script>

@@ -1,4 +1,4 @@
-import {isBlank} from "~/functions/utils";
+import {isBlank} from "~/shared-functions/utils";
 
 // This is your plugin object. It can be exported to be used anywhere.
 const LoggingSerivce = {
@@ -50,16 +50,38 @@ const LoggingSerivce = {
       }
     },
 
-    getLogger(vueComponent) {
 
-      const vueComponentName = vueComponent && vueComponent._name ?
-        '[' + vueComponent._name
+    printAppInfo(appInfo) {
+      try {
+        console.group(`Application started: %c ${appInfo.name} %c Version ${appInfo.version} %c`,
+          'background:#35495e ; padding: 2px; margin: 2px 0 2px 2px; border-radius: 3px 0 0 3px;  color: #fff',
+          'background:#0060a9 ; padding: 2px; margin: 2px 2px 2px 0; border-radius: 0 3px 3px 0;  color: #fff',
+          'background:transparent',);
+        console.log('Application configuration:');
+        console.table({...appInfo});
+        console.groupEnd();
+      } catch (e) {
+        // ignore IE errors
+      }
+    },
+
+    getLogger(context) {
+      let contextName = '';
+
+      if (context && context._name) {
+        // Vue Component Name
+        contextName = context._name
           .replace('<', '')
-          .replace('>', '') + '] ' : '';
-
+          .replace('>', '');
+        contextName = `[${contextName}] `;
+      } else if (context.constructor.name) {
+        // Class Name
+        contextName = context.constructor.name;
+        contextName = `[${contextName}] `;
+      }
 
       return {
-        context: vueComponentName,
+        context: contextName,
         isLoggingEnabled: this.isLoggingEnabled,
 
         info(message, ...optionalParams) {

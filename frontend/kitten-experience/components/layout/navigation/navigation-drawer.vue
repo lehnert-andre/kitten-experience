@@ -34,13 +34,13 @@
     computed: {
       isNavigationDrawerVisible: {
         get() {
-          return this.$store.getters['navigation/isNavigationDrawerVisible']
+          return this.$store.getters['NAVIGATION/isNavigationDrawerVisible']
         },
         set(show) {
           if (show) {
-            this.$store.dispatch('navigation/SHOW_NAVIGATION_DRAWER');
+            this.$store.dispatch('NAVIGATION/SHOW_NAVIGATION_DRAWER');
           } else {
-            this.$store.dispatch('navigation/HIDE_NAVIGATION_DRAWER');
+            this.$store.dispatch('NAVIGATION/HIDE_NAVIGATION_DRAWER');
           }
         }
       },
@@ -48,22 +48,22 @@
        * @return true, if a clipped drawer should rests under the application toolbar
        */
       isNavigationDrawerClipped() {
-        return this.$store.getters['navigation/isNavigationDrawerClipped']
+        return this.$store.getters['NAVIGATION/isNavigationDrawerClipped']
       },
       /**
        * @return true, if only the icons are visible
        */
       isNavigationDrawerMinified() {
-        return this.$store.getters['navigation/isNavigationDrawerMinified']
+        return this.$store.getters['NAVIGATION/isNavigationDrawerMinified']
       },
     },
     methods: {
       toggleNavigationDrawerSize() {
 
         if (this.isNavigationDrawerMinified) {
-          this.$store.dispatch('navigation/EXPAND_NAVIGATION_DRAWER');
+          this.$store.dispatch('NAVIGATION/EXPAND_NAVIGATION_DRAWER');
         } else {
-          this.$store.dispatch('navigation/MINIFY_NAVIGATION_DRAWER');
+          this.$store.dispatch('NAVIGATION/MINIFY_NAVIGATION_DRAWER');
         }
       }
     },

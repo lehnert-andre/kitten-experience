@@ -30,9 +30,11 @@
  */
 export class Kitten {
 
-  #_id; // private field
-  #_imageUrl;
+  #_imageUrl; // private field
   #_rating; // private field + read-only (no setter)
+
+  // technical fields
+  #_id;
 
   /**
    * New kitten instance without rating
@@ -44,7 +46,7 @@ export class Kitten {
   constructor(id, imageUrl, rating = null) {
     this.#_id = id; // private mandatory field
     this.#_imageUrl = imageUrl;
-    this.#_rating = rating;
+    this.#_rating = rating; // private optional field
   }
 
   /*

@@ -33,16 +33,22 @@
     computed: {
       isProduction() {
         return this.$store.getters['isProduction'];
+      },
+      getAppInfo() {
+        return this.$store.getters['getAppInfo'];
       }
     },
-    mounted() {
+    created() {
+      // configure logging and display configuration while development
       if (this.isProduction) {
         // deactivate the logging on PROD
         this.$LOGGER.disableLogging();
+      } else {
+        this.$LOGGER.printAppInfo(this.getAppInfo);
       }
-
+    },
+    mounted() {
       LOGGER = this.$LOGGER.getLogger(this);
-      LOGGER.info('Application started.');
     }
   }
 </script>
