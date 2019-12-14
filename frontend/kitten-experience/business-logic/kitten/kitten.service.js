@@ -1,7 +1,8 @@
 import {getScreenWidth} from "~/shared-functions/runtime-info";
 import KittenMockDataProvider from "./provider/kitten-mock-data.provider";
-import {getLocalStorageItem, setLocalStorageItem} from "../../shared-functions/web-storage";
+import {getLocalStorageItem, setLocalStorageItem} from "~/shared-functions/web-storage";
 import {Kitten} from "./types/kitten.class";
+import {UriBuilder} from "~/shared-functions/uri-builder";
 
 class KittenService {
   #LOGGER;
@@ -169,6 +170,29 @@ class KittenService {
       this.#LOGGER.warn('Failed to fill incoming kitten queue.', e);
       await this.#store.dispatch('APP_OFFLINE');
     }
+  }
+
+  adjustKittenImageSize(currentKitten, maxWidth = 680) {
+    return UriBuilder.fromHost('http://placekitten.com/')
+      .path(Math.min(maxWidth, 680))
+      .path(Math.min(maxWidth, 680))
+      .queryParam('image', currentKitten.id)
+      .toString();
+  }
+
+  async loadHint() {
+    const showHint = getLocalStorageItem('showHint');
+
+    if (showHint === undefined) {
+      await this.#store.dispatch('NOTIFICATION_SHOW_HINT');
+    } else {
+      await this.#store.dispatch('NOTIFICATION_DISCARD_HINT');
+    }
+  }
+
+  async dismissHint() {
+    setLocalStorageItem('showHint', false);
+    await this.#store.dispatch('NOTIFICATION_DISCARD_HINT');
   }
 
   _persistIncomingKitten(newKitten) {

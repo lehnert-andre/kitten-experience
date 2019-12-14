@@ -5,7 +5,7 @@
       app
       height="60"
       color="rgb(252, 112, 134)">
-      <v-app-bar-nav-icon @click.stop="showNavigationDrawer()"/>
+      <v-app-bar-nav-icon @click.stop="toggleNavigationDrawer()"/>
 
       <v-toolbar-title style="width: 100%; text-align: center;">
           <span class="app-title">
@@ -70,8 +70,8 @@
       }
     },
     methods: {
-      showNavigationDrawer() {
-        this.$store.dispatch('NAVIGATION/SHOW_NAVIGATION_DRAWER');
+      toggleNavigationDrawer() {
+        this.$store.dispatch('NAVIGATION/TOGGLE_NAVIGATION_DRAWER');
       }
     }
   }

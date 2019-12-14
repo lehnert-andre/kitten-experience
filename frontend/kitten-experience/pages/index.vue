@@ -2,72 +2,121 @@
   <v-layout
     column
     justify-center
-    align-center
-  >
+    align-center>
     <v-flex
       xs12
-      sm8
-      md6
-    >
+      sm12
+      md12>
+      <v-alert v-if="ready && showHint"
+        text
+        color="primary">
+        <h3 class="headline">Dear kitten lover or hater,</h3>
 
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower
-             developers to create amazing applications.</p>
+        {{ showHint }}
 
-          <img :src="getKitten.imageUrl" @click="removeFirst"/>
+        <v-row
+          align="center"
+          no-gutters>
+          <v-col class="grow">
+            you can use the buttons to rate the kitten.
+          </v-col>
+          <v-spacer />
+          <v-col class="shrink">
+            <v-btn
+              color="primary"
+              outlined
+              @click="dismissHint()">
+              Dismiss
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-alert>
 
-          {{ getKitten }}
-        </v-card-text>
+
+      <v-card raised>
+        <kitten-image :imageUrl="getKitten.imageUrl" :loading="loading" />
+
         <v-card-actions>
-          <v-spacer/>
-          <v-btn
-            color="primary"
-          >
-            Continue
+          <v-btn raised
+                 large
+                 color="#038F79"
+                 @click="hate()">HATE
           </v-btn>
+          <v-spacer/>
+          <v-btn raised
+                 large
+                 color="primary"
+                 @click="love()">LOVE
+          </v-btn>
+
         </v-card-actions>
       </v-card>
+
     </v-flex>
+
   </v-layout>
+
+
 </template>
+
 
 <script>
   import KittenService from "../business-logic/kitten/kitten.service";
   import {Kitten} from "../business-logic/kitten/types/kitten.class";
+  import KittenImage from '~/components/kitten/kitten-image';
 
   let LOGGER;
   let kittenService;
   export default {
+    components: {
+      KittenImage
+    },
     async mounted() {
       LOGGER = this.$LOGGER.getLogger(this);
 
       kittenService = new KittenService(this);
       this.currentKitten = await kittenService.nextKitten();
+      await kittenService.loadHint();
 
       LOGGER.info('Loaded');
+      this.loading = false;
     },
     data() {
       return {
-        currentKitten: null
+        currentKitten: null,
+        loading: true,
       }
     },
     computed: {
       ready() {
-        return !!kittenService;
+        return !!this.currentKitten;
       },
       getKitten() {
         return this.currentKitten ? this.currentKitten : Kitten.unratedKitten(0, '');
+      },
+      getAppState() {
+        return this.$store.getters['getAppState'];
+      },
+      showHint() {
+        return this.ready ? this.$store.getters['showNotificationHint'] : false;
       }
     },
     methods: {
-      async removeFirst() {
+
+      async hate() {
+        this.loading = true;
+        await kittenService.hateKitten(this.currentKitten);
+        this.currentKitten = await kittenService.nextKitten();
+        this.loading = false;
+      },
+      async love() {
+        this.loading = true;
         await kittenService.loveKitten(this.currentKitten);
         this.currentKitten = await kittenService.nextKitten();
-
+        this.loading = false;
+      },
+      async dismissHint() {
+        await kittenService.dismissHint();
       }
     }
   }

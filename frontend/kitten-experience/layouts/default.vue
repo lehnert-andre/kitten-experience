@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app  style="min-width: 210px;">
     <!-- navigation to select the routes/ pages -->
     <navigation-drawer></navigation-drawer>
 

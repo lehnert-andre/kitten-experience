@@ -1,4 +1,5 @@
 import {UriBuilder} from "../shared-functions/uri-builder";
+import {getLocalStorageItem} from "../shared-functions/web-storage";
 
 export const state = () => ({
   app: {
@@ -9,6 +10,9 @@ export const state = () => ({
     environment: 'DEVELOPMENT',
     baseUrl: '',
     kittenBackendUrl: ''
+  },
+  notifications: {
+    showHint: true
   }
 });
 
@@ -58,6 +62,13 @@ export const actions = {
   async APP_UPDATING ({ commit }) {
     commit('setAppState', 'UPDATING');
   },
+
+  async NOTIFICATION_DISCARD_HINT ({ commit }) {
+    commit('setShowNotificationHint', false);
+  },
+  async NOTIFICATION_SHOW_HINT ({ commit }) {
+    commit('setShowNotificationHint', true);
+  },
 };
 
 export const mutations = {
@@ -83,6 +94,11 @@ export const mutations = {
     state.app.kittenBackendUrl = kittenBackendUrl;
   },
 
+  setShowNotificationHint (state, showNotificationHint) {
+    this.$LOGGER.info('store/setShowNotificationHint', 'Show hint: ' + showNotificationHint);
+
+    state.notifications.showHint = showNotificationHint;
+  },
 };
 
 export const getters = {
@@ -100,5 +116,9 @@ export const getters = {
   },
   getAppInfo: state => {
     return state.app;
+  },
+
+  showNotificationHint: state => {
+    return state.notifications.showHint;
   }
 };

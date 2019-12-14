@@ -13,7 +13,7 @@ class KittenMockDataProvider extends KittenProvider{
 
 
   async requestNextKitten(numberOfKitten, imageSize) {
-    await new Promise(resolve => setTimeout(() => resolve(), 50));
+    await new Promise(resolve => setTimeout(() => resolve(), 5));
 
       this.LOGGER.info(`requestNextKitten: Request with numberOfKitten = ${numberOfKitten} and imageSize ${imageSize}x${imageSize} px`);
 
@@ -25,8 +25,8 @@ class KittenMockDataProvider extends KittenProvider{
         const randomImageId = randomIntFromInterval(1, MAX_KITTEN_IMAGES);
 
         const url = UriBuilder.fromHost('http://placekitten.com/')
-          .path(imageSize - 100)
-          .path(imageSize - 100)
+          .path(Math.min(imageSize, 680))
+          .path(Math.min(imageSize, 680))
           .queryParam('image', randomImageId)
           .toString();
 
@@ -43,7 +43,7 @@ class KittenMockDataProvider extends KittenProvider{
   }
 
   async sendRatedKitten(kittenList) {
-    await new Promise(resolve => setTimeout(() => resolve(), 500));
+    await new Promise(resolve => setTimeout(() => resolve(), 5));
 
     this.LOGGER.info(`sendRatedKitten: Send rated kitten list with ${kittenList.length} enties to the backend.`, kittenList);
   }
