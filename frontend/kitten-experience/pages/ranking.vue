@@ -8,7 +8,7 @@
         sm12
         md12>
 
-        <v-card raised style="width: 500px; height: 560px">
+        <v-card raised>
 
           <v-card-title class="headline">Die Top 5 Kätzchen</v-card-title>
 

@@ -9,7 +9,7 @@
       md12>
 
 
-      <v-card raised style="width: 500px; height: 560px">
+      <v-card raised>
         <kitten-image :imageUrl="getKitten.kittenUrl" :loading="loading"/>
 
         <v-card-actions>

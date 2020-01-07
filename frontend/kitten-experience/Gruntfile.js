@@ -46,10 +46,11 @@ module.exports = function(grunt) {
    * - copy specific config
    * - start build
    */
-  grunt.registerTask('build:standalone', [
+  grunt.registerTask('deploy', [
     'clear',
-    'copy:env_local',
-    'shell:npm_generate'
+    'copy:env_firebase',
+    'shell:npm_generate',
+    'shell:firebase_deploy'
   ]);
 
 
@@ -70,6 +71,9 @@ module.exports = function(grunt) {
         },
         npm_generate: {
           command: 'npm run generate',
+        },
+        firebase_deploy: {
+          command: 'firebase deploy',
         }
       },
 
@@ -78,6 +82,12 @@ module.exports = function(grunt) {
           files: [
             {
               src: ['./environments/local.env'],
+              dest: './.env',
+            }]},
+        env_firebase: {
+          files: [
+            {
+              src: ['./environments/firebase.env'],
               dest: './.env',
             }]},
       },
