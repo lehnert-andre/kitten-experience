@@ -7,34 +7,10 @@
       xs12
       sm12
       md12>
-      <v-alert v-if="ready && showHint"
-        text
-        color="primary">
-        <h3 class="headline">Dear kitten lover or hater,</h3>
-
-        {{ showHint }}
-
-        <v-row
-          align="center"
-          no-gutters>
-          <v-col class="grow">
-            you can use the buttons to rate the kitten.
-          </v-col>
-          <v-spacer />
-          <v-col class="shrink">
-            <v-btn
-              color="primary"
-              outlined
-              @click="dismissHint()">
-              Dismiss
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-alert>
 
 
-      <v-card raised>
-        <kitten-image :imageUrl="getKitten.imageUrl" :loading="loading" />
+      <v-card raised style="width: 500px; height: 560px">
+        <kitten-image :imageUrl="getKitten.kittenUrl" :loading="loading"/>
 
         <v-card-actions>
           <v-btn raised
@@ -61,24 +37,16 @@
 
 
 <script>
-  import KittenService from "../business-logic/kitten/kitten.service";
-  import {Kitten} from "../business-logic/kitten/types/kitten.class";
   import KittenImage from '~/components/kitten/kitten-image';
 
-  let LOGGER;
-  let kittenService;
   export default {
     components: {
       KittenImage
     },
+    async fetch ({ store }) {
+      await store.dispatch('KITTEN/NEXT_KITTEN');
+    },
     async mounted() {
-      LOGGER = this.$LOGGER.getLogger(this);
-
-      kittenService = new KittenService(this);
-      this.currentKitten = await kittenService.nextKitten();
-      await kittenService.loadHint();
-
-      LOGGER.info('Loaded');
       this.loading = false;
     },
     data() {
@@ -92,7 +60,7 @@
         return !!this.currentKitten;
       },
       getKitten() {
-        return this.currentKitten ? this.currentKitten : Kitten.unratedKitten(0, '');
+        return this.$store.getters['KITTEN/getCurrentKitten'];
       },
       getAppState() {
         return this.$store.getters['getAppState'];
@@ -105,18 +73,17 @@
 
       async hate() {
         this.loading = true;
-        await kittenService.hateKitten(this.currentKitten);
-        this.currentKitten = await kittenService.nextKitten();
+
+        await this.$store.dispatch('KITTEN/HATE_KITTEN');
+
         this.loading = false;
       },
       async love() {
         this.loading = true;
-        await kittenService.loveKitten(this.currentKitten);
-        this.currentKitten = await kittenService.nextKitten();
+
+        await this.$store.dispatch('KITTEN/LOVE_KITTEN');
+
         this.loading = false;
-      },
-      async dismissHint() {
-        await kittenService.dismissHint();
       }
     }
   }

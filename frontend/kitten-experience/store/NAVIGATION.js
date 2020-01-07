@@ -7,14 +7,14 @@ export const state = () => ({
   // read only
   routes: [
     {
-      icon: 'mdi-apps',
-      title: 'Welcome',
+      icon: 'mdi-play',
+      title: 'Spielen',
       to: '/'
     },
     {
-      icon: 'mdi-chart-bubble',
-      title: 'Inspire',
-      to: '/inspire'
+      icon: 'mdi-trophy',
+      title: 'Rangliste',
+      to: '/ranking'
     }
   ],
 });

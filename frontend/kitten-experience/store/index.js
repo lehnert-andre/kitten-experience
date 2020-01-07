@@ -117,6 +117,9 @@ export const getters = {
   getAppInfo: state => {
     return state.app;
   },
+  getKittenBackendUrl: state => {
+    return state.app.kittenBackendUrl;
+  },
 
   showNotificationHint: state => {
     return state.notifications.showHint;
